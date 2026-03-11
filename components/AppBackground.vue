@@ -93,11 +93,11 @@ const speechBubbleText = computed(() => {
   }
 
   if (step === 'login') {
-    return '登入你的口袋基金平台帳號密碼喔';
+    return '登入你的CMoneyFund口袋基金帳號密碼喔';
   }
 
   if (step === 'form') {
-    return '填寫好正確資料，不定期通知你口袋基金驚喜優惠喔！';
+    return '填寫好正確資料，不定期通知你CMoneyFund口袋基金驚喜優惠喔！';
   }
 
   if (typeof step === 'string' && step.startsWith('quiz')) {
