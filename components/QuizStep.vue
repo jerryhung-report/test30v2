@@ -20,6 +20,7 @@ const allQuestions = computed(() => {
 const index = ref(0);
 const answers = ref<Record<number, number>>({});
 const isTransitioning = ref(false);
+const isProcessing = ref(false);
 
 const currentQ = computed(() => allQuestions.value[index.value] || allQuestions.value[0]);
 
@@ -67,9 +68,17 @@ const handleNext = () => {
 };
 
 const handleAnswer = (val: number) => {
-  if (!currentQ.value) return;
+  if (!currentQ.value || isTransitioning.value || isProcessing.value) return;
+  
+  isProcessing.value = true;
+  // Set the answer immediately to show the red background
   answers.value[currentQ.value.id] = val;
-  handleNext();
+  
+  // Delay moving to the next question so the user sees the feedback
+  setTimeout(() => {
+    handleNext();
+    isProcessing.value = false;
+  }, 300);
 };
 
 const continueToTree = () => {
