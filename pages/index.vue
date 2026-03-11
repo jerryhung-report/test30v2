@@ -78,6 +78,7 @@ const toggleFund = (code: string) => {
 
 const resetAnalysis = () => {
   selectedFunds.value = [];
+  router.push({ query: { ...route.query, step: 'quiz1' } });
   step.value = "quiz";
 };
 
