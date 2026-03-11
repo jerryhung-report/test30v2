@@ -12,15 +12,19 @@
   <img 
     src="https://www.cmoneyfund.com.tw/api/v1.0/File/Download/e8b694d7-c020-4a76-ba81-ae4ebaf183f0" 
     alt="閃閃" 
-    class="fixed bottom-[2%] left-[-2%] sm:bottom-[10%] sm:left-[2%] w-[70px] sm:w-[150px] md:w-[200px] xl:w-[280px] object-contain animate-float opacity-70 sm:opacity-100 z-0 pointer-events-none"
+    class="fixed bottom-[2%] left-[-2%] sm:bottom-[10%] sm:left-[2%] w-[70px] sm:w-[150px] md:w-[200px] xl:w-[280px] object-contain animate-float opacity-100 z-0 pointer-events-none"
   />
   
   <!-- 太空袋袋 -->
-  <div class="fixed top-[15%] right-[2%] sm:top-[5%] sm:right-[2%] w-[80px] sm:w-[180px] md:w-[240px] xl:w-[320px] pointer-events-auto group z-50 animate-float" style="animation-delay: 1.5s;">
+  <div 
+    @click="triggerAnimation"
+    class="fixed top-[15%] right-[2%] sm:top-[5%] sm:right-[2%] w-[80px] sm:w-[180px] md:w-[240px] xl:w-[320px] pointer-events-auto group z-50 animate-float" 
+    style="animation-delay: 1.5s;"
+  >
     <!-- 漫畫式對話框 -->
       <div 
         v-if="speechBubbleText"
-        class="absolute top-[20%] right-[90%] sm:right-[95%] w-max max-w-[150px] sm:max-w-[250px] bg-white text-slate-800 font-black text-xs sm:text-base px-4 py-3 rounded-2xl shadow-xl transition-all duration-300 pointer-events-none transform border-2 border-slate-100"
+        class="absolute top-[20%] right-[90%] sm:right-[95%] w-max max-w-[180px] sm:max-w-[250px] bg-white text-slate-800 font-black text-xs sm:text-base px-4 py-3 rounded-2xl shadow-xl transition-all duration-300 pointer-events-none transform border-2 border-slate-100"
         :class="isAutoAnimating ? 'opacity-100 translate-x-0 delay-500' : 'opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 group-hover:delay-500'"
       >
         {{ speechBubbleText }}
@@ -32,7 +36,7 @@
         <img 
           src="https://www.cmoneyfund.com.tw/api/v1.0/File/Download/c76bc90c-f17b-4398-9a52-289738c40038" 
           alt="太空袋袋" 
-          class="w-full h-full object-contain opacity-70 sm:opacity-100 translate-y-[20px]"
+          class="w-full h-full object-contain opacity-100 translate-y-[20px]"
         />
       </div>
     </div>
@@ -46,12 +50,16 @@ const route = useRoute();
 const isAutoAnimating = ref(false);
 let animationTimeout = null;
 
-watch(() => route.query.step, () => {
+const triggerAnimation = () => {
   isAutoAnimating.value = true;
   if (animationTimeout) clearTimeout(animationTimeout);
   animationTimeout = setTimeout(() => {
     isAutoAnimating.value = false;
   }, 3000);
+};
+
+watch(() => route.query.step, () => {
+  triggerAnimation();
 }, { immediate: true });
 
 const speechBubbleText = computed(() => {
