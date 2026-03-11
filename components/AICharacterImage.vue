@@ -16,15 +16,17 @@ const imageUrl = computed(() => {
     <img 
       :src="imageUrl" 
       :alt="persona.title" 
-      class="w-full h-full object-contain animate-float" 
+      class="w-full h-full object-contain animate-scaleBounce" 
     />
   </div>
 </template>
 
 <style scoped>
-@keyframes float { 
-  0%, 100% { transform: translateY(0); } 
-  50% { transform: translateY(-20px); } 
+@keyframes scaleBounce {
+  0% { transform: scale(0.5); opacity: 0; }
+  40% { transform: scale(1.15); opacity: 1; }
+  70% { transform: scale(0.9); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
 }
-.animate-float { animation: float 5s ease-in-out infinite; }
+.animate-scaleBounce { animation: scaleBounce 0.8s ease-in-out forwards; }
 </style>
