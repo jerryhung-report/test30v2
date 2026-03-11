@@ -24,7 +24,7 @@ const shareToFB = () => {
 };
 
 const shareToLine = () => {
-  const text = "基金人格測驗/口袋基金平台";
+  const text = "基金人格測驗/CMoneyFund口袋基金";
   const url = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl.value)}&text=${encodeURIComponent(text)}`;
   window.open(url, '_blank', 'width=600,height=400');
   closeMenu();

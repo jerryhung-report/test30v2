@@ -30,15 +30,15 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: '基金人格測驗/口袋基金平台',
+      title: '基金人格測驗/CMoneyFund口袋基金',
       meta: [
         { name: 'description', content: '準備好探索你的基金人格了嗎？30題測驗，完成後即可獲得您的投資風格分析報告與最適配基金。' },
-        { property: 'og:title', content: '基金人格測驗/口袋基金平台' },
+        { property: 'og:title', content: '基金人格測驗/CMoneyFund口袋基金' },
         { property: 'og:description', content: '準備好探索你的基金人格了嗎？30題測驗，完成後即可獲得您的投資風格分析報告與最適配基金。' },
         { property: 'og:image', content: 'https://www.cmoneyfund.com.tw/api/v1.0/File/Download/c76bc90c-f17b-4398-9a52-289738c40038' },
         { property: 'og:type', content: 'website' },
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: '基金人格測驗/口袋基金平台' },
+        { name: 'twitter:title', content: '基金人格測驗/CMoneyFund口袋基金' },
         { name: 'twitter:description', content: '準備好探索你的基金人格了嗎？30題測驗，完成後即可獲得您的投資風格分析報告與最適配基金。' },
         { name: 'twitter:image', content: 'https://www.cmoneyfund.com.tw/api/v1.0/File/Download/c76bc90c-f17b-4398-9a52-289738c40038' }
       ]
