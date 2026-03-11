@@ -2,6 +2,7 @@
   <div>
     <NuxtErrorBoundary>
       <NuxtPage />
+      <ShareButton />
       <template #error="{ error, clearError }">
         <div class="fixed inset-0 z-50 flex items-center justify-center bg-white p-4">
           <div class="max-w-md w-full bg-red-50 border border-red-200 rounded-xl p-6 text-red-900 space-y-4">
