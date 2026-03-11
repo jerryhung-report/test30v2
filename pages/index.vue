@@ -83,7 +83,7 @@ const resetAnalysis = () => {
 };
 
 const openExternalLink = () => {
-  window.location.href = 'https://benevolent-sprinkles-a26554.netlify.app/';
+  window.location.href = 'https://legendary-gaufre-1c21e1.netlify.app';
 };
 </script>
 
