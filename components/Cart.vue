@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Globe, Satellite, ShoppingCart, RotateCcw } from 'lucide-vue-next';
+import { Globe, Satellite, ShoppingCart, RotateCcw, Download } from 'lucide-vue-next';
 import { FUND_MAPPING, MOCK_FUNDS, ETF_LINKS } from '~/utils/constants';
 
 import type { Persona } from '~/types';
@@ -24,6 +24,40 @@ const satelliteFunds = computed(() => [
 const openSubscription = () => {
   window.open("https://dev-fund.cmoneyfund.com.tw/transaction", "_blank");
 };
+
+const downloadCSV = () => {
+  const fundMap: Record<string, string> = {};
+  MOCK_FUNDS.forEach(f => { fundMap[f.code] = f.name; });
+
+  let csvContent = "\ufeff"; // BOM for Excel UTF-8
+  csvContent += "投資人格,核心配置 (Core),衛星配置 (Satellite),ETF\n";
+
+  for (const [personaTitle, data] of Object.entries(FUND_MAPPING)) {
+    const coreNames = data.core.map(c => fundMap[c] || c).join('; ');
+    const satNames = data.sat.map(c => fundMap[c] || c).join('; ');
+    const etfName = fundMap[data.etf] || data.etf;
+    
+    // Escape quotes for CSV
+    const row = [
+      `"${personaTitle}"`,
+      `"${coreNames}"`,
+      `"${satNames}"`,
+      `"${etfName}"`
+    ].join(",");
+    
+    csvContent += row + "\n";
+  }
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+  link.setAttribute("href", url);
+  link.setAttribute("download", "基金人格配置清單.csv");
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 </script>
 
 <template>
@@ -32,6 +66,14 @@ const openSubscription = () => {
       <h2 class="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight leading-tight">
         針對 <span class="text-[#D21118]">{{ persona.title }}</span> 性格，<br class="sm:hidden" />適合買什麼？
       </h2>
+      <div class="flex justify-center">
+        <button 
+          @click="downloadCSV"
+          class="flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-2xl text-slate-600 font-bold hover:bg-slate-50 transition-colors shadow-sm"
+        >
+          <Download :size="20" /> 下載所有配置清單 (CSV)
+        </button>
+      </div>
     </div>
 
     <div class="space-y-24">
@@ -84,13 +126,13 @@ const openSubscription = () => {
         <div class="flex gap-2 sm:gap-4 w-full">
           <button 
             @click="$emit('reset')"
-            class="px-4 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black bg-[#59657F] hover:bg-[#475065] text-white text-[11px] sm:text-sm flex-1 flex items-center justify-center gap-2 transition-colors shadow-lg shadow-[#59657F]/20"
+            class="px-4 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black bg-[#59657F] hover:bg-[#475065] text-white text-[18px] sm:text-sm flex-1 flex items-center justify-center gap-2 transition-colors shadow-lg shadow-[#59657F]/20"
           >
-            <RotateCcw :size="14" class="sm:w-4 sm:h-4" /> 重新分析
+            <RotateCcw :size="18" class="sm:w-4 sm:h-4" /> 重新分析
           </button>
           <button 
             @click="openSubscription"
-            class="px-6 sm:px-12 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black bg-[#D21118] text-white hover:bg-[#b00e14] text-[11px] sm:text-sm flex-1 flex items-center justify-center gap-2 shadow-lg shadow-[#D21118]/20 transition-all"
+            class="px-6 sm:px-12 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-black bg-[#D21118] text-white hover:bg-[#b00e14] text-[18px] sm:text-sm flex-1 flex items-center justify-center gap-2 shadow-lg shadow-[#D21118]/20 transition-all"
           >
             立即申購
           </button>

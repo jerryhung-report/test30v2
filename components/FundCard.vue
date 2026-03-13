@@ -80,7 +80,7 @@ const formattedNameParts = computed(() => {
           </div>
           <h4 
             @click.stop="openFundDetails"
-            class="font-extrabold text-2xl sm:text-3xl text-slate-900 leading-tight group-hover:text-[#D21118] hover:underline transition-colors inline-block"
+            class="font-extrabold text-[24px] sm:text-[30px] text-slate-900 leading-tight group-hover:text-[#D21118] hover:underline transition-colors inline-block"
           >
             <template v-for="(part, index) in formattedNameParts" :key="index">
               <span v-if="part.isWarning" class="text-orange-500">{{ part.text }}</span>
