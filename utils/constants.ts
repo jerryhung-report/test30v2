@@ -899,14 +899,14 @@ export const PERSONAS: Persona[] = [
 export const FUND_MAPPING: Record<string, {core: string[], sat: string[], etf: string}> = {
   "口袋柴": {
     "core": [
-      "97978047",
       "C0109004",
-      "92017204"
+      "98639616",
+      "98641524"
     ],
     "sat": [
-      "98639616",
-      "98641524",
-      "C0054057"
+      "C0054057",
+      "C0054121",
+      "98641204"
     ],
     "etf": "00713"
   },
