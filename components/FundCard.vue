@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { ExternalLink, CheckSquare, Square } from 'lucide-vue-next';
 import type { Fund } from '~/types';
 
@@ -24,8 +25,35 @@ const handleClick = () => {
 };
 
 const openFundDetails = () => {
-  window.open(`https://dev-fund.cmoneyfund.com.tw/fund-introduction/${props.fund.code}/performance-nav`, '_blank');
+  if (props.externalLink) {
+    window.open(props.externalLink, '_blank');
+  } else {
+    window.open(`https://dev-fund.cmoneyfund.com.tw/fund-introduction/${props.fund.code}/performance-nav`, '_blank');
+  }
 };
+
+const formattedNameParts = computed(() => {
+  const name = props.fund.name;
+  // Match parentheses that contain "基金" or "配息" or "收益"
+  const regex = /([\(（][^)）]*(?:基金|配息|收益)[^)）]*[\)）])/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+  
+  while ((match = regex.exec(name)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push({ text: name.substring(lastIndex, match.index), isWarning: false });
+    }
+    parts.push({ text: match[0], isWarning: true });
+    lastIndex = regex.lastIndex;
+  }
+  
+  if (lastIndex < name.length) {
+    parts.push({ text: name.substring(lastIndex), isWarning: false });
+  }
+  
+  return parts.length > 0 ? parts : [{ text: name, isWarning: false }];
+});
 </script>
 
 <template>
@@ -54,7 +82,10 @@ const openFundDetails = () => {
             @click.stop="openFundDetails"
             class="font-extrabold text-2xl sm:text-3xl text-slate-900 leading-tight group-hover:text-[#D21118] hover:underline transition-colors inline-block"
           >
-            {{ fund.name }}
+            <template v-for="(part, index) in formattedNameParts" :key="index">
+              <span v-if="part.isWarning" class="text-orange-500">{{ part.text }}</span>
+              <template v-else>{{ part.text }}</template>
+            </template>
           </h4>
           <p class="text-base text-slate-500 leading-relaxed font-medium max-w-4xl">{{ fund.desc }}</p>
         </div>
